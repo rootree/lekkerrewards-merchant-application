@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">0dp</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="allBtn">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">0dp</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+
+
+    <style name="customerNumbers">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/page_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">38sp</item>
+    </style>
+
+    <style name="Theme.Transparent" parent="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@color/transparentActivityBackground</item>
+    </style>
+
+    <style name="Theme.UserDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/transparentActivityBackground</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+</resources>

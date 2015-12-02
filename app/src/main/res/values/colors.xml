@@ -1,0 +1,13 @@
+<resources>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="theme_primary">#00B0D2</color>
+    <color name="theme_primary_dark">#009FBE</color>
+    <color name="page_bg">#F9F9FA</color>
+    <color name="page_text">#555555</color>
+    <color name="table_top">#ddd</color>
+    <color name="table_each_second">#F9F9F9</color>
+    <color name="table_each_first">#FFFFFF</color>
+    <color name="transparentActivityBackground">#55000000</color>
+
+</resources>

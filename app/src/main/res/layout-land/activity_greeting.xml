@@ -1,0 +1,399 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GreetingActivity"
+    android:keepScreenOn="true"
+    >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="160dp" >
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:id="@+id/topBlock"
+            android:background="@drawable/nice_bottom"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/logo"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageView_logo"
+                        android:src="@drawable/margo_fw"
+                        android:contentDescription="LekkerRewards" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="www.LekkerRewards.nl"
+                        android:textColor="#777777"
+                        android:id="@+id/textView6"
+                        android:paddingTop="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:padding="0dp"
+                    android:layout_marginLeft="25dp"
+                    android:paddingLeft="20dp">
+
+                    <ImageButton
+                        android:layout_width="48dp"
+                        android:layout_height="36dp"
+                        android:id="@+id/nl_locale"
+                        android:src="@drawable/nl"
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp"
+                        android:visibility="gone" />
+
+                    <ImageButton
+                        android:layout_width="48dp"
+                        android:layout_height="36dp"
+                        android:id="@+id/en_locale"
+                        android:src="@drawable/us"
+                        android:paddingLeft="0dp"
+                        android:paddingTop="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingBottom="0dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/checkIn">
+
+                <Button
+                    android:id="@+id/checkIn_btn"
+
+                    style="@style/allBtn"
+
+                    android:textSize="23sp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:background="@drawable/btn_blue"
+
+                    android:text="@string/check_in_with_email"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/steps"
+            android:background="@drawable/steps"
+            android:gravity="center_vertical"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/step1"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingRight="25dp"
+                android:paddingLeft="25dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/take_card_or_sign_up"
+                    android:id="@+id/step1_desc"
+                    android:textSize="@dimen/steps_font"
+                    android:textColor="@color/page_text"
+                    android:paddingLeft="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/step2"
+                android:layout_weight="1"
+                android:paddingLeft="25dp"
+                android:background="@drawable/td_left2"
+                android:gravity="center_vertical"
+                android:paddingRight="25dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/scan_qr_or_from_site"
+                    android:textColor="@color/page_text"
+                    android:id="@+id/textView"
+                    android:textSize="@dimen/steps_font"
+                    android:paddingLeft="15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/step3"
+                android:layout_weight="1"
+                android:paddingLeft="25dp"
+                android:background="@drawable/td_left2"
+                android:gravity="center_vertical"
+                android:paddingRight="25dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/circle"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_rewards"
+                    android:textColor="@color/page_text"
+                    android:id="@+id/textView2"
+                    android:textSize="@dimen/steps_font"
+                    android:paddingLeft="15dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="160dp"
+
+        android:layout_marginBottom="140dp"
+        android:id="@+id/mailPart">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/metchantLogo"
+            android:gravity="center_horizontal"
+            android:measureWithLargestChild="false"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:background="@drawable/merchant_logo">
+
+                <ImageView
+                    android:layout_width="@dimen/logo_size"
+                    android:layout_height="@dimen/logo_size"
+                    android:id="@+id/merchantLogo"
+                    android:src="@drawable/mankind" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:background="@drawable/merchant_name"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Mankind"
+                    android:textSize="12pt"
+                    android:id="@+id/marchantName"
+                    android:textColor="@color/page_text" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/marchantRewards"
+            android:padding="1dp"
+            android:background="@drawable/nice_border"
+            android:layout_weight="2"
+            >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:id="@+id/header"
+                android:background="@drawable/merchant_name">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="@dimen/first_column"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/visits"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/rewards_table_font"
+                        android:textColor="@color/page_text"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical|center_horizontal"
+                          />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+
+                    android:background="@drawable/td_left"
+                    android:gravity="center"
+                     >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rewards"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/rewards_table_font"
+                        android:textColor="@color/page_text"
+                        android:paddingLeft="15dp"
+                        android:layout_margin="0dp"
+                        android:layout_gravity="left|center"
+                        android:gravity="center_vertical|center_horizontal"
+                         />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rewards">
+
+                <ListView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/listView_rewards"
+                    android:headerDividersEnabled="false"
+
+                    />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="140dp"
+        android:layout_alignParentBottom="true" >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/mainBtn_layout"
+            android:padding="15dp"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/main_btn"
+
+                android:textSize="42dp"
+                style="@style/allBtn"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:background="@drawable/btn_blue"
+                android:text="@string/tab_to_start"
+                />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

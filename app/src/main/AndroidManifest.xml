@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lekkerrewards.merchant">
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+    <uses-feature android:name="android.hardware.camera.front" android:required="true"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="true"/>
+    <uses-feature android:name="android.hardware.screen.landscape" android:required="true" />
+
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:anyDensity="true"
+        />
+
+    <application
+        android:name=".LekkerApplication"
+        android:allowBackup="true"
+        android:configChanges="layoutDirection|locale"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/HotelsAppTheme.Startup"
+        >
+
+        <meta-data android:name="AA_DB_NAME" android:value="loyalty.db" />
+        <meta-data android:name="AA_DB_VERSION" android:value="24" />
+        <meta-data
+            android:name="AA_SERIALIZERS"
+            android:value="com.lekkerrewards.merchant.serializer.DateTimeSerializer" />
+
+        <activity
+            android:name=".activities.GreetingActivity"
+            android:keepScreenOn="true"
+            android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection|locale">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.ScanningActivity"
+            android:keepScreenOn="true"
+            android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection|locale"
+             >
+
+            <intent-filter>
+                <action android:name="com.google.zxing.client.android.SCAN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".activities.EmailCheckConfirmedActivity"
+
+            android:keepScreenOn="true"
+            android:theme="@style/Theme.UserDialog"
+            android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection|locale"
+             ></activity>
+        <activity
+            android:name=".activities.EmailCheckActivity"
+            android:keepScreenOn="true"
+            android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection|locale"
+             ></activity>
+        <activity
+            android:name=".activities.CustomerActivity"
+            android:keepScreenOn="true"
+            android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection|locale"
+             ></activity>
+        <activity
+            android:name=".activities.RedeemConfirmedActivity"
+            android:keepScreenOn="true"
+
+            android:theme="@style/Theme.UserDialog"
+            android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection|locale"
+             ></activity>
+        <activity
+            android:name=".activities.HistoryActivity"
+            android:keepScreenOn="true"
+            android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection|locale"
+           ></activity>
+        <activity
+            android:name=".activities.RegistrationActivity"
+            android:keepScreenOn="true"
+            android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection|locale"
+             ></activity>
+        <activity
+            android:name=".activities.RegisteredActivity"
+            android:keepScreenOn="true"
+
+            android:theme="@style/Theme.UserDialog"
+            android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection|locale"
+            ></activity>
+        <activity
+            android:name=".activities.CardChangedActivity"
+            android:keepScreenOn="true"
+
+            android:theme="@style/Theme.UserDialog"
+            android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection|locale"
+             ></activity>
+        <activity
+            android:name=".activities.QrCheckConfirmedActivity"
+            android:keepScreenOn="true"
+
+            android:theme="@style/Theme.UserDialog"
+            android:configChanges="orientation|keyboardHidden|screenSize|layoutDirection|locale"
+            ></activity>
+    </application>
+
+</manifest>

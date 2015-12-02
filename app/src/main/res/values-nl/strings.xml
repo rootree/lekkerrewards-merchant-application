@@ -1,0 +1,121 @@
+<resources>
+
+    <string name="check_in_with_email">CHECK-IN MET EMAIL</string>
+
+    <string name="take_card_or_sign_up">Neem een kaart mee of inschrijven op de website</string>
+
+    <string name="scan_qr_or_from_site">Scan de kaart of via de website</string>
+
+    <string name="get_rewards">Verdien beloningen</string>
+
+    <string name="visits">Bezoeken</string>
+
+    <string name="rewards">Beloningen</string>
+
+    <string name="tab_to_start">TAB OM TE STARTEN</string>
+
+    <string name="you_have_new_card">U heeft een nieuwe kaart!</string>
+
+<string name="old_card_end">Uw oude kaart is gedeactiveerd en u kunt nu bezoeken verzamelen en 
+beloningen inwisselen met de nieuwe kaart</string>
+
+    <string name="good">FANTASTISCH!</string>
+
+    <string name="lekke_rewards">LekkerRewards</string>
+
+    <string name="welcome_back">Welkom terug, </string>
+
+    <string name="total_visits">Totaal aantal bezoeken:</string>
+
+    <string name="total_redeems">Totaal aantal inwisselingen:</string>
+
+    <string name="available_visits">Beschikbare bezoeken:</string>
+
+    <string name="visists">Bezoeken</string>
+
+    <string name="history">GESCHIEDENIS</string>
+
+    <string name="main_screen">UITLOGGEN</string>
+
+    <string name="go_back">TERUG</string>
+
+    <string name="check_in">CHECK-IN</string>
+
+    <string name="fill_your_email">Vul uw e-mail in</string>
+
+    <string name="you_checked">U bent ingecheckt!</string>
+
+    <string name="thanks">DANK U WEL!</string>
+
+    <string name="with_history"> / Geschiedenis</string>
+
+    <string name="empty_redeems">Uw ingewisselde beloningen worden hier weergegeven</string>
+
+    <string name="back">TERUG</string>
+
+    <string name="you_checked_in">Nieuwe check-in!</string>
+
+    <string name="new_reward">Een nieuwe beloning!</string>
+
+<string name="reward_instruction">Om deze beloning te ontvangen dient u dit scherm
+aan de kassier te tonenen</string>
+
+    <string name="you_registrated">U bent geregistreerd!</string>
+
+<string name="registration_desc">U kunt nu bezoeken verzamelen en deze inwisselen 
+voor beloningen</string>
+
+    <string name="registration">INSCHRIJVEN</string>
+
+    <string name="enter_email">Vul uw e-mail in</string>
+
+    <string name="redeem">INWISSELEN</string>
+
+    <string name="requeur_more">Meer: </string>
+
+    <string name="title_bad_settings">De instellingen zijn verwijderd</string>
+
+<string name="message_bad_settings">Deze applicatie in niet correct
+geconfigureerd. Contact your Help Desk!</string>
+
+    <string name="for_visits">Voor %s bezoeken</string>
+
+    <string name="message_check_card">Controleer de kaart die u gebruikt, deze zal niet passen</string>
+
+<string name="message_wrong_qr">Uw QR-code is niet gevonden in onze
+database</string>
+
+    <string name="message_wrong_email">Een niet bestaande e-mail</string>
+
+<string name="message_email_linked">Deze QR-code is al verbonden aan uw
+e-mail</string>
+
+<string name="message_email_linked_to_another">Deze QR-code is al verbonden aan 
+andere cliënt</string>
+
+<string name="message_qr_card_cooldown">Onze excuses, maar we kunnen niet vaak 
+kaarten uitgeven</string>
+
+    <string name="message_unregistrated">U bent niet geregistreerd</string>
+
+    <string name="message_have_check_in">U hebt vandaag al ingecheckt!</string>
+
+<string name="message_not_visits">U heeft niet voldoende bezoeken beschikbaar
+om deze beloning te ontvangen</string>
+
+    <string name="scan_instruction">Scan uw kaart of uw telefoon</string>
+
+    <string name="update_rewards">De beloningen zijn bijgewerkt</string>
+
+    <string name="before_logout"> sec. voor het uitloggen</string>
+
+
+    <string name="privacy_policy"><u>Privacybeleid</u></string>
+
+
+    <string name="turms_of_use"><u>Algemene gebruiksvoorwaarden</u></string>
+
+<string name="scaning_text">Door uw kaart of telefoon te scannen, gaat u akkoord met 
+LekkerRewards\' Algemene gebruiksvoorwaarden en Privacybeleid.</string>
+
+</resources>

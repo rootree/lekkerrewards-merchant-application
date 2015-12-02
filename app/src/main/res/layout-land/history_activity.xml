@@ -1,0 +1,264 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:keepScreenOn="true"
+tools:context=".CustomerActivity">
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/relativeLayout">
+
+
+    <LinearLayout
+        android:id="@+id/topBlock"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/nice_bottom"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/lekke_rewards"
+                android:src="@drawable/margo_fw" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/checkIn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Мария Горбань"
+                android:id="@+id/customer_name"
+                android:textColor="@color/page_text"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:textSize="15pt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/with_history"
+                android:id="@+id/textView8"
+                android:textColor="@android:color/tertiary_text_light"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+<LinearLayout
+    android:id="@+id/mailPart"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginBottom="100dp"
+
+    android:orientation="horizontal"
+    android:layout_below="@+id/relativeLayout">
+
+    <LinearLayout
+        android:id="@+id/marchantVisits"
+        android:layout_width="500dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
+        android:background="@drawable/nice_border"
+        android:orientation="vertical"
+        android:padding="1dp"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/merchant_name"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/visists"
+                    android:textColor="@color/page_text"
+                    android:textSize="@dimen/rewards_table_font"
+                    android:textStyle="bold"
+                    android:paddingLeft="15dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/visits"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/listView_visits"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:headerDividersEnabled="false"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/marchantRewards"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
+        android:background="@drawable/nice_border"
+        android:orientation="vertical"
+        android:padding="1dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:id="@+id/headerRewards"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/merchant_name"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:layout_gravity="center"
+                android:background="@drawable/td_left"
+
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:layout_margin="0dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:paddingLeft="15dp"
+                    android:text="@string/rewards"
+                    android:textColor="@color/page_text"
+                    android:textSize="@dimen/rewards_table_font"
+                    android:textStyle="bold"  />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/rewards"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ListView
+                android:id="@+id/listView_redeems"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:headerDividersEnabled="false"
+
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@android:id/empty"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="10dp"
+                android:text="@string/empty_redeems"
+                android:textSize="10pt"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
+
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="110dp"
+    android:layout_alignParentBottom="true">
+
+    <LinearLayout
+        android:id="@+id/mainBtn_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/big_bottom_btn_layout_height"
+
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+
+        <Button
+            android:id="@+id/return_btn"
+
+            style="@style/allBtn"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/btn_blue"
+            android:text="@string/back"
+            android:textSize="32sp"
+            android:layout_weight="1"
+            android:layout_marginRight="7dp" />
+
+
+
+        <Button
+            android:id="@+id/logout_btn"
+
+            style="@style/allBtn"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/btn_blue"
+            android:text="@string/main_screen"
+            android:textSize="32sp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+
+</RelativeLayout>
