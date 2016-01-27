@@ -87,6 +87,7 @@ import retrofit.Call;
 public class LekkerApplication extends com.activeandroid.app.Application {
 
 
+    public static String lastQR = "";
     public static boolean isSyncInProcess = false;
     private Locale locale = null;
 

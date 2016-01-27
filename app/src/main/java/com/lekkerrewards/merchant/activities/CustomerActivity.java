@@ -252,8 +252,18 @@ public class CustomerActivity extends BaseActivity {
             }
 
             if (LekkerApplication.merchantCustomer == null) {
-                Mint.logEvent("Customer was lost", MintLogLevel.Error);
+                Mint.logEvent("Customer was lost " + LekkerApplication.lastQR, MintLogLevel.Error);
                 finish();
+
+                ((LekkerApplication) getApplication()).showMessage("It's something wrong. Could you scan your QR code again?");
+
+                textView.setVisibility(View.VISIBLE);
+                redeemBtn.setVisibility(View.GONE);
+                textView.setText(getResources().getString(R.string.requeur_more) + " " +
+                                (currentReward.points)
+                );
+
+                return rewardItem;
             }
 
             if(currentReward.points > LekkerApplication.merchantCustomer.points) {

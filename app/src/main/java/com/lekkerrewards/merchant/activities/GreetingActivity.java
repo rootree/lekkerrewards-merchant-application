@@ -38,6 +38,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 import retrofit.Call;
@@ -49,6 +51,10 @@ public class GreetingActivity extends BaseActivity implements OnClickListener {
 
     private static final int REQUEST_CODE_FUNCTONE = 100;
     private static final int REQUEST_RETURN_FROM_CHECK_IN = 101;
+
+
+    boolean checkStep2 = false;
+    boolean checkStep3 = false;
 
     private List<Reward> rewards = new ArrayList<Reward>();
     MerchantBranch merchantBranch;
@@ -113,6 +119,7 @@ public class GreetingActivity extends BaseActivity implements OnClickListener {
         startBtn();
         checkInWithEmailBtn();
         localeBtn();
+        hiddenExit();
 
         populateRewardsList();
         populateRewardsListView();
@@ -121,8 +128,7 @@ public class GreetingActivity extends BaseActivity implements OnClickListener {
         marchantName.setText(merchantBranch.fkMerchant.name);
 
         int isUpdate = getIntent().getIntExtra("is_update", 0);
-        if (isUpdate == 1)
-        {
+        if (isUpdate == 1) {
             ((LekkerApplication) getApplication()).showMessage(getString(R.string.update_rewards));
         }
 
@@ -156,9 +162,6 @@ public class GreetingActivity extends BaseActivity implements OnClickListener {
     private void checkInWithEmailBtn() {
 
 
-
-
-
         Button btnStart = (Button) findViewById(R.id.checkIn_btn);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
@@ -173,6 +176,51 @@ public class GreetingActivity extends BaseActivity implements OnClickListener {
         });
 
 
+    }
+
+    private void hiddenExit() {
+
+
+        TextView step1DescText = (TextView) findViewById(R.id.step1_desc);
+
+        step1DescText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                checkStep2 = false;
+                checkStep3 = false;
+
+                Timer timer = new Timer();
+                TimerTask hourlyTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (checkStep2 && checkStep3) {
+                            finish();
+                        } else {
+                            checkStep2 = false;
+                            checkStep3 = false;
+                        }
+                    }
+                };
+
+                timer.schedule(hourlyTask, 0l, 3000);
+            }
+        });
+
+        TextView step2DescText = (TextView) findViewById(R.id.step2_desc);
+        TextView step3DescText = (TextView) findViewById(R.id.step3_desc);
+
+        step2DescText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                checkStep2 = true;
+            }
+        });
+        step3DescText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                checkStep3 = true;
+            }
+        });
     }
 
     private void localeBtn() {
@@ -349,7 +397,7 @@ public class GreetingActivity extends BaseActivity implements OnClickListener {
         if (
                 activeClass.equals(GreetingActivity.class.getName()) ||
                         activeClass.equals(CustomerActivity.class.getName())
-        ) {
+                ) {
 
             finish();
             Intent myIntent = new Intent(getBaseContext(), GreetingActivity.class);
@@ -357,7 +405,7 @@ public class GreetingActivity extends BaseActivity implements OnClickListener {
 
             startActivity(myIntent);
 
-         }
+        }
 
 
     }

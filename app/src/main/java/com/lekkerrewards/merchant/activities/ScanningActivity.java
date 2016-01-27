@@ -43,6 +43,8 @@ public class ScanningActivity extends BaseActivity {
                 barcodeView.pause();
 
                 String QR = result.getText();
+                LekkerApplication.lastQR = QR;
+
                 Qr qrCard;
                 try {
 
