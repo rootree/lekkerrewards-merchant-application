@@ -27,6 +27,10 @@ import com.lekkerrewards.merchant.events.DeletedRequestEvent;
 import com.lekkerrewards.merchant.events.SendingRequestEvent;
 import com.lekkerrewards.merchant.events.SentRequestEvent;
 import com.lekkerrewards.merchant.events.SyncEvent;
+import com.lekkerrewards.merchant.network.APIService;
+import com.lekkerrewards.merchant.network.api.LekkerAPI;
+import com.lekkerrewards.merchant.network.request.SyncRequest;
+import com.lekkerrewards.merchant.network.response.SyncResponse;
 
 import android.view.View.OnClickListener;
 import android.widget.Toast;
@@ -36,9 +40,10 @@ import java.util.List;
 import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
+import retrofit.Call;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-public class GreetingActivity extends Activity implements OnClickListener {
+public class GreetingActivity extends BaseActivity implements OnClickListener {
 
     private static final String TAG = ScanningActivity.class.getSimpleName();
 
@@ -57,8 +62,6 @@ public class GreetingActivity extends Activity implements OnClickListener {
 
         // mAvailableCountText.setText(Html.fromHtml(getResources().getQuantityString(R.plurals.hotels_count_available, event.getCount(), event.getCount())));
         super.onCreate(savedInstanceState);
-
-        EventBus.getDefault().register(this);
 
         LekkerApplication.merchantCustomer = null;
 
@@ -103,6 +106,8 @@ public class GreetingActivity extends Activity implements OnClickListener {
 
         }
         //MerchantBranch test = MerchantBranch.getActiveRewards(merchantBranch);
+
+        EventBus.getDefault().register(this);
 
 
         startBtn();
@@ -150,6 +155,10 @@ public class GreetingActivity extends Activity implements OnClickListener {
 
     private void checkInWithEmailBtn() {
 
+
+
+
+
         Button btnStart = (Button) findViewById(R.id.checkIn_btn);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +171,7 @@ public class GreetingActivity extends Activity implements OnClickListener {
 
             }
         });
+
 
     }
 

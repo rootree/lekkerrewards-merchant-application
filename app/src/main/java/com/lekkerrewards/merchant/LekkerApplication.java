@@ -1,9 +1,17 @@
 package com.lekkerrewards.merchant;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.BatteryManager;
+import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
@@ -11,8 +19,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.activeandroid.ActiveAndroid;
 import com.devspark.appmsg.AppMsg;
+import com.google.gson.Gson;
 import com.lekkerrewards.merchant.activities.GreetingActivity;
 import com.lekkerrewards.merchant.activities.RedeemConfirmedActivity;
 import com.lekkerrewards.merchant.entities.Customer;
@@ -38,11 +50,26 @@ import com.lekkerrewards.merchant.network.request.SyncRequest;
 import com.path.android.jobqueue.JobManager;
 import com.path.android.jobqueue.config.Configuration;
 import com.path.android.jobqueue.log.CustomLogger;
-
+import com.splunk.mint.Mint;
+import com.splunk.mint.MintLogLevel;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -51,6 +78,8 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import retrofit.Call;
 
 /**
  * Created by Ivan on 22/10/15.
@@ -68,6 +97,8 @@ public class LekkerApplication extends com.activeandroid.app.Application {
         instance = this;
     }
 
+    public MixpanelAPI mixpanel;
+
     public final static String TAG = "Lekker";
 
     public final static int QR_SOURCE_WEB = 1;
@@ -75,6 +106,9 @@ public class LekkerApplication extends com.activeandroid.app.Application {
 
     public final static int QR_STATUS_ACTIVATED = 1;
     public final static int QR_STATUS_DEACTIVATED = 2;
+
+
+    public static final String MIXPANEL_TOKEN = "7983b9326e9b96046d381386846d8d36";
 
 
     private static MerchantBranch merchantBranch;
@@ -106,9 +140,38 @@ public class LekkerApplication extends com.activeandroid.app.Application {
 
         super.onCreate();
 
+        Mint.initAndStartSession(this.getApplicationContext(), "528f4663");
+
         setLocale();
         configureJobManager();
         startTimer();
+
+        initMixpanel();
+
+        registerBatteryLevelReceiver();
+        checkOffOnScreen();
+
+
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite()) {
+                String currentDBPath = "//data//com.lekkerrewards.merchant//databases//loyalty.db";
+                String backupDBPath = "loyalty.db";
+                File currentDB = new File(data, currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                }
+            }
+        } catch (Exception e) {
+        }
     }
 
     private void startTimer(){
@@ -191,6 +254,8 @@ public class LekkerApplication extends com.activeandroid.app.Application {
         appMsg.setAnimation(android.R.anim.fade_in, android.R.anim.fade_out);
         appMsg.show();
         Log.d(TAG, message);
+
+        mixpanel.track(message);
     }
 
     /**
@@ -380,8 +445,6 @@ public class LekkerApplication extends com.activeandroid.app.Application {
 
         MerchantsCustomers merchantCustomer = MerchantsCustomers.getMerchantCustomerRelation(merchantBranch, customer);
 
-        LekkerApplication.merchantCustomer = merchantCustomer;
-
         DateTime now = new DateTime();
 
         if (merchantCustomer == null) {
@@ -396,8 +459,6 @@ public class LekkerApplication extends com.activeandroid.app.Application {
 
             obtainedPoints = Config.POINTS_FOR_FIRST_VISIT;
 
-            LekkerApplication.merchantCustomer = merchantCustomer;
-
         } else {
 
             Date d2 = new Date();
@@ -406,6 +467,9 @@ public class LekkerApplication extends com.activeandroid.app.Application {
             long hours = TimeUnit.MILLISECONDS.toHours(diff);
 
             if (hours >= 0 && hours < Config.CHECKING_COOL_DOWN) {
+
+                LekkerApplication.merchantCustomer = merchantCustomer;
+
                 throw new CheckInException(getStringById(R.string.message_have_check_in));
             }
 
@@ -437,6 +501,8 @@ public class LekkerApplication extends com.activeandroid.app.Application {
         } finally {
             ActiveAndroid.endTransaction();
         }
+
+        LekkerApplication.merchantCustomer = merchantCustomer;
 
         return true;
     }
@@ -543,6 +609,64 @@ public class LekkerApplication extends com.activeandroid.app.Application {
         jobManager = new JobManager(this, configuration);
     }
 
+    private BroadcastReceiver battery_receiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            boolean isPresent = intent.getBooleanExtra("present", false);
+            String technology = intent.getStringExtra("technology");
+            int plugged = intent.getIntExtra("plugged", -1);
+            int scale = intent.getIntExtra("scale", -1);
+            int health = intent.getIntExtra("health", 0);
+            int status = intent.getIntExtra("status", 0);
+            int rawlevel = intent.getIntExtra("level", -1);
+            int level = 0;
+            String temp=null;
+
+            Bundle bundle = intent.getExtras();
+
+            if (rawlevel <= 15 && rawlevel > 14) {
+                mixpanel.track("Low battery");
+                //Mint.logEvent("Low battery", MintLogLevel.Warning);
+            }
+        }
+    };
+
+    private void registerBatteryLevelReceiver(){
+        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        registerReceiver(battery_receiver, filter);
+    }
+
+    private void initMixpanel(){
+        // Initialize the library with your
+        // Mixpanel project token, MIXPANEL_TOKEN, and a reference
+        // to your application context.
+        mixpanel =
+                MixpanelAPI.getInstance(getApplicationContext(), MIXPANEL_TOKEN);
+
+        mixpanel.identify(Config.MERCHANT_NAME);
+        mixpanel.getPeople().identify(Config.MERCHANT_NAME);
+
+        mixpanel.track("Application started");
+    }
+
+    private void checkOffOnScreen(){
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                    mixpanel.track("Screen is off");
+                } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                    mixpanel.track("Screen is on");
+                }
+            }
+        }, intentFilter);
+    }
+
+
     public JobManager getJobManager() {
         return jobManager;
     }
@@ -553,5 +677,80 @@ public class LekkerApplication extends com.activeandroid.app.Application {
 
     public static void logError(Object error) {
         Log.e(LekkerApplication.TAG, error.toString());
+    }
+
+    public static void logTransaction(Serializable request, int HTTPCode) {
+
+        String date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(new Date());
+
+        Gson gson = new Gson();
+        String json = gson.toJson(request);
+
+        String lineForLog = String.format(
+                "%s | %d | %s | %s",
+                date,
+                HTTPCode,
+                request.getClass().getSimpleName(),
+                json
+        );
+
+        getInstance().appendLog(
+                lineForLog,
+                "transactions"
+        );
+        //Log.e(LekkerApplication.TAG, call.toString());
+    }
+
+    private File getLogFile(String type)
+    {
+        //File backupPath = Environment.getExternalStorageDirectory();
+
+       // File backupPath = new File(getApplicationInfo().dataDir + "/files");
+
+        File backupPath = new File(Environment.getExternalStorageDirectory().getPath() + "/logs");
+
+        if(!backupPath.exists()){
+            backupPath.mkdirs();
+        }
+
+
+        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+
+        File logFile = new File(backupPath + "/" + type + "_" + date + ".txt");
+
+        if (!logFile.exists())
+        {
+            try
+            {
+                logFile.createNewFile();
+            }
+            catch (IOException e)
+            {
+                // TODO Auto-generated catch block
+                //e.printStackTrace();
+                Mint.logException(e);
+            }
+        }
+        return  logFile;
+    }
+
+    public void appendLog(String text, String type)
+    {
+        File logFile = getLogFile(type);
+        try
+        {
+            //BufferedWriter for performance, true to set append to file flag
+            BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true));
+
+            buf.append(text);
+            buf.newLine();
+            buf.close();
+        }
+        catch (IOException e)
+        {
+            Mint.logException(e);
+            // TODO Auto-generated catch block
+            // e.printStackTrace();
+        }
     }
 }

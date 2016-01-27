@@ -50,10 +50,8 @@ public class RedeemJob extends Job {
         // Create a call instance
         Call<LekkerResponse> call = lekker.redeem(redeemRequest);
 
-        LekkerResponse response = APIService.send(call);
-        if (response != null && !response.success) {
-            Log.e(LekkerApplication.TAG, response.message);
-        }
+        LekkerResponse response = APIService.send(call, redeemRequest);
+
 
         EventBus.getDefault().post(new SentRequestEvent(call));
     }

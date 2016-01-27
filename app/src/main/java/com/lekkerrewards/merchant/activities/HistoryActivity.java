@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HistoryActivity extends Activity {
+public class HistoryActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_HISTROY = 103;
     private static final int REQUEST_CODE_REDEEM = 104;

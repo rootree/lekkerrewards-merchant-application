@@ -53,10 +53,8 @@ public class CheckInByQRJob extends Job {
         // Create a call instance
         Call<LekkerResponse> call = lekker.checkInByQR(request);
 
-        LekkerResponse response = APIService.send(call);
-        if (response != null && !response.success) {
-            Log.e(LekkerApplication.TAG, response.message);
-        }
+        LekkerResponse response = APIService.send(call, request);
+
 
         EventBus.getDefault().post(new SentRequestEvent(call));
     }

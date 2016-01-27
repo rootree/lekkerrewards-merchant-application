@@ -12,7 +12,7 @@ import com.lekkerrewards.merchant.LekkerApplication;
 import com.lekkerrewards.merchant.R;
 
 
-public class RedeemConfirmedActivity extends Activity {
+public class RedeemConfirmedActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

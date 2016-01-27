@@ -22,6 +22,8 @@ import com.lekkerrewards.merchant.R;
 import com.lekkerrewards.merchant.entities.MerchantBranch;
 import com.lekkerrewards.merchant.entities.Reward;
 import com.lekkerrewards.merchant.events.SyncEvent;
+import com.splunk.mint.Mint;
+import com.splunk.mint.MintLogLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 
-public class CustomerActivity extends Activity {
+public class CustomerActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_HISTROY = 103;
     private static final int REQUEST_CODE_REDEEM = 104;
@@ -189,6 +191,7 @@ public class CustomerActivity extends Activity {
 
 
     private class RewardsListAdapter extends ArrayAdapter {
+
         public RewardsListAdapter() {
             super(CustomerActivity.this, R.layout.reward_item, rewards);
         }
@@ -231,6 +234,7 @@ public class CustomerActivity extends Activity {
 
                         Log.d(LekkerApplication.class.toString(), e.getMessage(), e);
 
+                        //Mint.logException(e);
                         ((LekkerApplication) getApplication()).showMessage(e.getMessage());
                     }
 
@@ -247,6 +251,11 @@ public class CustomerActivity extends Activity {
                 rewardItem.setBackgroundResource(R.color.table_each_second);
             }
 
+            if (LekkerApplication.merchantCustomer == null) {
+                Mint.logEvent("Customer was lost", MintLogLevel.Error);
+                finish();
+            }
+
             if(currentReward.points > LekkerApplication.merchantCustomer.points) {
                 textView.setVisibility(View.VISIBLE);
                 redeemBtn.setVisibility(View.GONE);
@@ -257,7 +266,6 @@ public class CustomerActivity extends Activity {
                 redeemBtn.setVisibility(View.VISIBLE);
                 textView.setVisibility(View.GONE);
             }
-
 
             return rewardItem;
         }

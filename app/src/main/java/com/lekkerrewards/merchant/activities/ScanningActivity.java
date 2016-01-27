@@ -24,10 +24,11 @@ import com.lekkerrewards.merchant.R;
 import com.lekkerrewards.merchant.entities.Customer;
 import com.lekkerrewards.merchant.entities.Qr;
 import com.lekkerrewards.merchant.exceptions.CheckInException;
+import com.splunk.mint.Mint;
 
 import java.util.List;
 
-public class ScanningActivity extends Activity {
+public class ScanningActivity extends BaseActivity {
 
     private static final String TAG = ScanningActivity.class.getSimpleName();
     private CompoundBarcodeView barcodeView;
@@ -48,6 +49,8 @@ public class ScanningActivity extends Activity {
                     qrCard = ((LekkerApplication) getApplication()).getQRByScannedCode(QR);
 
                 } catch (Exception e) {
+
+                    Mint.logException(e);
 
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     Log.d(LekkerApplication.class.toString(), e.getMessage(), e);
@@ -84,6 +87,7 @@ public class ScanningActivity extends Activity {
 
                     } catch (CheckInException e) {
 
+
                         Intent intent = new Intent(getApplicationContext(), CustomerActivity.class);
                         intent.putExtra("already_check_in", e.getMessage());
                         startActivity(intent);
@@ -91,6 +95,8 @@ public class ScanningActivity extends Activity {
                         finish();
 
                     } catch (Exception e) {
+
+                        Mint.logException(e);
 
                         Log.d(LekkerApplication.class.toString(), e.getMessage(), e);
 
@@ -140,13 +146,12 @@ public class ScanningActivity extends Activity {
 
             @Override
             public void onClick(View arg0) {
+
                 Intent intent = new Intent(getApplicationContext(), EmailCheckActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-
-
 
         barcodeView = (CompoundBarcodeView) findViewById(R.id.barcode_scanner);
         barcodeView.decodeSingle(callback);
@@ -155,6 +160,12 @@ public class ScanningActivity extends Activity {
 
         CameraSettings settings = barcodeView.getBarcodeView().getCameraSettings();
         settings.setRequestedCameraId(Camera.CameraInfo.CAMERA_FACING_FRONT);
+        settings.setContinuousFocusEnabled(true);
+        settings.setMeteringEnabled(true);
+        settings.setBarcodeSceneModeEnabled(true);
+        settings.setAutoFocusEnabled(true);
+        settings.setAutoTorchEnabled(true);
+        settings.setExposureEnabled(true);
         barcodeView.getBarcodeView().setCameraSettings(settings);
 
     }

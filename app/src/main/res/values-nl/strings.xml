@@ -118,4 +118,10 @@ om deze beloning te ontvangen</string>
 <string name="scaning_text">Door uw kaart of telefoon te scannen, gaat u akkoord met 
 LekkerRewards\' Algemene gebruiksvoorwaarden en Privacybeleid.</string>
 
+    <string name="cooldown_hint">Je kan inchecken elke %s uur</string>
+    <string name="check_in_with_user_email">"CHECK-IN MET "</string>
+
+
+    <string name="registration_with_user_email">"REGISTREREN MET "</string>
+
 </resources>

@@ -45,10 +45,8 @@ public class RegistrationJob extends Job {
         // Create a call instance
         Call<LekkerResponse> call = lekker.registration(request);
 
-        LekkerResponse response = APIService.send(call);
-        if (response != null && !response.success) {
-            Log.e(LekkerApplication.TAG, response.message);
-        }
+        LekkerResponse response = APIService.send(call, request);
+
 
         EventBus.getDefault().post(new SentRequestEvent(call));
     }

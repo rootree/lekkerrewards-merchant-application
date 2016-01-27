@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.lekkerrewards.merchant.Config;
 import com.lekkerrewards.merchant.LekkerApplication;
 import com.lekkerrewards.merchant.R;
 
 
-public class QrCheckConfirmedActivity extends Activity {
+public class QrCheckConfirmedActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +23,11 @@ public class QrCheckConfirmedActivity extends Activity {
 
         int age = getIntent().getIntExtra("user-age", -1);
         String name = getIntent().getStringExtra("user-name");
+
+        ((TextView)findViewById(R.id.cooldown)).setText(
+                String.format(getString(R.string.cooldown_hint), Config.CHECKING_COOL_DOWN)
+        );
+
 
         Button btnCustomer = (Button)findViewById(R.id.customer_btn);
         btnCustomer.setOnClickListener(new View.OnClickListener() {

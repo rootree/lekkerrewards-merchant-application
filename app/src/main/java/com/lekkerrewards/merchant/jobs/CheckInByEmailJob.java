@@ -44,11 +44,8 @@ public class CheckInByEmailJob extends Job {
         // Create a call instance
         Call<LekkerResponse> call = lekker.checkInByEmail(request);
 
-        LekkerResponse response = APIService.send(call);
+        LekkerResponse response = APIService.send(call, request);
 
-        if (response != null && !response.success) {
-            Log.e(LekkerApplication.TAG, response.message);
-        }
 
         EventBus.getDefault().post(new SentRequestEvent(call));
     }

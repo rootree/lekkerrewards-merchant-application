@@ -60,10 +60,8 @@ public class SyncJob extends Job {
         // Create a call instance
         Call<SyncResponse> call = lekker.sync(syncRequest);
 
-        SyncResponse response = (SyncResponse) APIService.send(call);
-        if (response != null && !response.success) {
-            Log.e(LekkerApplication.TAG, response.message);
-        }
+        SyncResponse response = (SyncResponse) APIService.send(call, syncRequest);
+
 
         updateDB(response);
 

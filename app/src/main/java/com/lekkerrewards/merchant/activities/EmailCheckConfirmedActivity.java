@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.lekkerrewards.merchant.Config;
 import com.lekkerrewards.merchant.LekkerApplication;
 import com.lekkerrewards.merchant.R;
 
 
-public class EmailCheckConfirmedActivity extends Activity {
+public class EmailCheckConfirmedActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,10 @@ public class EmailCheckConfirmedActivity extends Activity {
 
             }
         });
+
+        ((TextView)findViewById(R.id.cooldown)).setText(
+                String.format(getString(R.string.cooldown_hint), Config.CHECKING_COOL_DOWN)
+        );
     }
     @Override public void onBackPressed() {
     // prevent "back" from leaving this activity

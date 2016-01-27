@@ -11,7 +11,7 @@ import com.lekkerrewards.merchant.LekkerApplication;
 import com.lekkerrewards.merchant.R;
 
 
-public class CardChangedActivity extends Activity {
+public class CardChangedActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

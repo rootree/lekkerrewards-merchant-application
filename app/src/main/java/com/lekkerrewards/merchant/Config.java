@@ -8,7 +8,8 @@ public class Config {
     //public static final String API_URL = "http://192.168.58.1:8888/api/";
     public static final String API_URL = "http://lekkerrewards.nl/api/";
 
-    public final static String API_KEY = "sdfsdsdfsdsdfs4444sdsdfsdsdfsdsdfsd";
+    public final static String API_KEY =  "sdfsdsdfsdsdfs4444sdsdfsdsdfsdsdfsd"; // "test-api"
+    public final static String MERCHANT_NAME =  "Mankind"; // "test-api"
 
     public final static String DATETIME_FORMAT = "dd-MM-yyyy HH:mm";
 

@@ -55,5 +55,7 @@
     <string name="privacy_policy"><u>Политика конфиденциальности</u></string>
     <string name="turms_of_use"><u>Правила использования</u></string>
     <string name="scaning_text">Отсканировав свою карту или ваш телефон вы соглашаетесь с Правилами использования и Политикой конфиденциальности.</string>
-
+    <string name="cooldown_hint">Вы можете отмечаться каждые %d часов</string>
+    <string name="check_in_with_user_email">"ОТМЕТИТЬСЯ С "</string>
+    <string name="registration_with_user_email">"ЗАРЕГИСТРИРОВАТЬСЯ С "</string>
 </resources>
