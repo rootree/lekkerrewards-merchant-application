@@ -194,7 +194,9 @@ public class GreetingActivity extends BaseActivity implements OnClickListener {
                     @Override
                     public void run() {
                         if (checkStep2 && checkStep3) {
-                            finish();
+                            moveTaskToBack(true);
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                            System.exit(1);
                         } else {
                             checkStep2 = false;
                             checkStep3 = false;

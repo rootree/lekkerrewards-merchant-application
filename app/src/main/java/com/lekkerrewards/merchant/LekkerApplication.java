@@ -81,6 +81,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import retrofit.Call;
+import retrofit.Response;
 
 /**
  * Created by Ivan on 22/10/15.
@@ -695,19 +696,21 @@ private CountDownTimer countDownTimer;
         Log.e(LekkerApplication.TAG, error.toString());
     }
 
-    public static void logTransaction(Serializable request, int HTTPCode) {
+    public static void logTransaction(Serializable request, Response response) {
 
         String date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(new Date());
 
         Gson gson = new Gson();
         String json = gson.toJson(request);
+        String jsonResponse = gson.toJson(response.body());
 
         String lineForLog = String.format(
-                "%s | %d | %s | %s",
+                "%s | %d | %s | %s | %s",
                 date,
-                HTTPCode,
+                response.code(),
                 request.getClass().getSimpleName(),
-                json
+                json,
+                jsonResponse
         );
 
         getInstance().appendLog(

@@ -249,11 +249,11 @@
                         android:layout_height="fill_parent"
                         android:text="5 сек. до выхода"
                         android:textColor="@color/primary_text_default_material_dark"
-                        android:textSize="14pt"
+                        android:textSize="12pt"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp" />
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp" />
                 </LinearLayout>
 
             </LinearLayout>

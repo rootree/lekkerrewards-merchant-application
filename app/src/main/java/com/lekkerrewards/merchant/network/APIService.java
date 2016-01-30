@@ -47,7 +47,7 @@ public class APIService {
         // Fetch and print a list of the contributors to the library.
         Response response = call.execute();
 
-        LekkerApplication.logTransaction(request, response.code());
+        LekkerApplication.logTransaction(request, response);
 
         if (response.code() != 200) {
 
