@@ -68,6 +68,24 @@ public class APIService {
 
         LekkerResponse APIResponse = (LekkerResponse) response.body();
 
+        if (!APIResponse.success) {
+
+            Gson gson = new Gson();
+            String requestJSON = gson.toJson(request);
+            String responseJSON = gson.toJson(APIResponse);
+
+            HashMap<String, Object> map = new HashMap<String, Object>();
+
+            map.put("request", requestJSON);
+            map.put("response", responseJSON);
+
+            Mint.logEvent(
+                    "Business Failed " + request.getClass().getSimpleName() + " " + APIResponse.message,
+                    MintLogLevel.Error,
+                    map
+            );
+        }
+
         return APIResponse;
     }
 }

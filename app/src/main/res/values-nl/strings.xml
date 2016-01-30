@@ -124,4 +124,8 @@ LekkerRewards\' Algemene gebruiksvoorwaarden en Privacybeleid.</string>
 
     <string name="registration_with_user_email">"REGISTREREN MET "</string>
 
+    <string name="cancel_redeem">ANNULEER</string>
+    <string name="pause">UITSTELLEN</string>
+    <string name="confirm">ACCEPTEREN</string>
+
 </resources>

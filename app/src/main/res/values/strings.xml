@@ -58,4 +58,7 @@
     <string name="cooldown_hint">Вы можете отмечаться каждые %d часов</string>
     <string name="check_in_with_user_email">"ОТМЕТИТЬСЯ С "</string>
     <string name="registration_with_user_email">"ЗАРЕГИСТРИРОВАТЬСЯ С "</string>
+    <string name="cancel_redeem">ОТМЕНА</string>
+    <string name="pause">ОТЛОЖИТЬ</string>
+    <string name="confirm">ПОДТВЕРДИТЬ</string>
 </resources>

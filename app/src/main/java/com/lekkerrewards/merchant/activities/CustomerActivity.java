@@ -1,7 +1,6 @@
 package com.lekkerrewards.merchant.activities;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -14,21 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lekkerrewards.merchant.Config;
 import com.lekkerrewards.merchant.LekkerApplication;
 import com.lekkerrewards.merchant.R;
 import com.lekkerrewards.merchant.entities.MerchantBranch;
 import com.lekkerrewards.merchant.entities.Reward;
-import com.lekkerrewards.merchant.events.SyncEvent;
 import com.splunk.mint.Mint;
 import com.splunk.mint.MintLogLevel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.greenrobot.event.EventBus;
 
 
 public class CustomerActivity extends BaseActivity {
@@ -53,37 +48,39 @@ public class CustomerActivity extends BaseActivity {
 
         if (merchantBranch == null || LekkerApplication.merchantCustomer == null) {
             finish();
+            return;
         }
 
-        TextView marchantName =(TextView)findViewById(R.id.marchantName);
+        TextView marchantName = (TextView) findViewById(R.id.marchantName);
         marchantName.setText(merchantBranch.fkMerchant.name);
 
-        ((TextView)findViewById(R.id.customer_name)).setText(LekkerApplication.merchantCustomer.fkCustomer.name);
+        ((TextView) findViewById(R.id.customer_name)).setText(LekkerApplication.merchantCustomer.fkCustomer.name);
 
-        ((TextView)findViewById(R.id.redeems_count)).setText(LekkerApplication.merchantCustomer.redeems + "");
-        ((TextView)findViewById(R.id.points)).setText(LekkerApplication.merchantCustomer.points + "");
-        ((TextView)findViewById(R.id.total_visits)).setText(LekkerApplication.merchantCustomer.visits + "");
+        ((TextView) findViewById(R.id.redeems_count)).setText(LekkerApplication.merchantCustomer.redeems + "");
+        ((TextView) findViewById(R.id.points)).setText(LekkerApplication.merchantCustomer.points + "");
+        ((TextView) findViewById(R.id.total_visits)).setText(LekkerApplication.merchantCustomer.visits + "");
 
-        countDown = (TextView)findViewById(R.id.coundDown);
+        countDown = (TextView) findViewById(R.id.coundDown);
 
         populateRewardsList();
         populateRewardsListView();
-        startCountDown();
+
+        startLogoutTimer(Config.BEFORE_LOGOUT);
 
         historyBtn();
         logoutBtn();
+        pauseBtn();
 
         String alreadyCheckIn = getIntent().getStringExtra("already_check_in");
-        if (alreadyCheckIn != null){
+        if (alreadyCheckIn != null) {
             ((LekkerApplication) getApplication()).showMessage(alreadyCheckIn);
         }
 
     }
 
 
-
     private void historyBtn() {
-        Button btnStart =(Button)findViewById(R.id.history_btn);
+        Button btnStart = (Button) findViewById(R.id.history_btn);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
 
@@ -109,23 +106,6 @@ public class CustomerActivity extends BaseActivity {
         }
     }
 
-    private void startCountDown() {
-
-        countDownTimer = new CountDownTimer(Config.BEFORE_LOGOUT * 1000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                countDown.setText(
-                    millisUntilFinished / 1000 + " " + getResources().getString(R.string.before_logout)
-                );
-            }
-
-            public void onFinish() {
-                logout();
-            }
-
-        }.start();
-
-    }
 
     private void logout() {
 
@@ -139,7 +119,7 @@ public class CustomerActivity extends BaseActivity {
     }
 
     private void logoutBtn() {
-        Button btnStart =(Button)findViewById(R.id.logout_btn);
+        Button btnStart = (Button) findViewById(R.id.logout_btn);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
 
@@ -151,13 +131,53 @@ public class CustomerActivity extends BaseActivity {
 
     }
 
+    private void startLogoutTimer(int seconds) {
+
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
+
+        countDownTimer = new CountDownTimer(seconds * 1000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                countDown.setText(
+                        millisUntilFinished / 1000 + " " + getResources().getString(R.string.before_logout)
+                );
+            }
+
+            public void onFinish() {
+
+                logout();
+            }
+
+        }.start();
+    }
+
+    private void pauseBtn() {
+
+        Button btnStart = (Button) findViewById(R.id.pause_btn);
+
+        btnStart.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                Button btnStart = (Button) findViewById(R.id.pause_btn);
+                // btnStart.setVisibility(View.GONE);
+
+                startLogoutTimer(Config.DELAY_BEFORE_LOGOUT);
+            }
+        });
+
+    }
+
     private void populateRewardsList() {
 
         MerchantBranch merchantBranch = ((LekkerApplication) getApplication()).getMerchantBranch();
         rewards = MerchantBranch.getActiveRewards(merchantBranch);
 
     }
-
 
 
     private void populateRewardsListView() {
@@ -189,7 +209,6 @@ public class CustomerActivity extends BaseActivity {
     }
 
 
-
     private class RewardsListAdapter extends ArrayAdapter {
 
         public RewardsListAdapter() {
@@ -219,14 +238,17 @@ public class CustomerActivity extends BaseActivity {
                     Reward clickedReward = rewards.get(position);
 
                     try {
-                        ((LekkerApplication) getApplication()).redeem(LekkerApplication.merchantCustomer, clickedReward);
+
+                        ((LekkerApplication) getApplication()).redeemCheck(
+                                LekkerApplication.merchantCustomer,
+                                clickedReward
+                        );
 
                         Intent intent = new Intent(getApplicationContext(), RedeemConfirmedActivity.class);
 
+                        intent.putExtra("reward-code", clickedReward.code);
                         intent.putExtra("reward-name", clickedReward.name);
                         intent.putExtra("reward-points", clickedReward.points);
-
-                        countDownTimer.cancel();
 
                         startActivityForResult(intent, REQUEST_CODE_REDEEM);
 
@@ -236,6 +258,8 @@ public class CustomerActivity extends BaseActivity {
 
                         //Mint.logException(e);
                         ((LekkerApplication) getApplication()).showMessage(e.getMessage());
+                    } finally {
+                        countDownTimer.cancel();
                     }
 
                 }
@@ -244,9 +268,9 @@ public class CustomerActivity extends BaseActivity {
             TextView textView = (TextView) rewardItem.findViewById(R.id.textView1);
 
 
-            double var2 = position %2;
-            if(var2 == 1.0) {
-                rewardItem.setBackgroundResource( R.color.table_each_first );
+            double var2 = position % 2;
+            if (var2 == 1.0) {
+                rewardItem.setBackgroundResource(R.color.table_each_first);
             } else {
                 rewardItem.setBackgroundResource(R.color.table_each_second);
             }
@@ -266,7 +290,7 @@ public class CustomerActivity extends BaseActivity {
                 return rewardItem;
             }
 
-            if(currentReward.points > LekkerApplication.merchantCustomer.points) {
+            if (currentReward.points > LekkerApplication.merchantCustomer.points) {
                 textView.setVisibility(View.VISIBLE);
                 redeemBtn.setVisibility(View.GONE);
                 textView.setText(getResources().getString(R.string.requeur_more) + " " +
@@ -297,7 +321,6 @@ public class CustomerActivity extends BaseActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
 
 }

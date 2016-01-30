@@ -22,6 +22,7 @@ public class Config {
     public final static int CHECKING_COOL_DOWN = 6;//6; @todo
     public final static int SYNC_EVERY_MINS = 15;
     public final static int BEFORE_LOGOUT = 10; // 10 sec.
+    public final static int DELAY_BEFORE_LOGOUT = 59; // 59 sec.
     public final static int BEFORE_HOMESCREEN = 60; // 60 sec.
     public final static String DEFAULT_LOCALE = "en"; // nl
 
