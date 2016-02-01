@@ -9,7 +9,10 @@ public class SyncRequest implements Serializable {
 
     public final long timestamp;
 
-    public SyncRequest(long timestamp) {
+    public final int visits;
+
+    public SyncRequest(long timestamp, int visits) {
         this.timestamp = timestamp;
+        this.visits = visits;
     }
 }

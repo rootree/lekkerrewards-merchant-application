@@ -567,7 +567,8 @@ public class LekkerApplication extends com.activeandroid.app.Application {
     public boolean sync() {
 
         getJobManager().addJobInBackground(new SyncJob(new SyncRequest(
-                getLastSyncDate()
+                getLastSyncDate(),
+                Visit.getCountOfAllVisits(this.getMerchantBranch())
         )));
 
         return true;

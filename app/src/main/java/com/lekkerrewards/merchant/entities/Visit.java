@@ -55,4 +55,15 @@ public class Visit extends Model
                 .limit(Config.LIMIT_VISITS)
                 .execute();
     }
+
+
+    public static int getCountOfAllVisits(
+            MerchantBranch merchantBranch
+    ) {
+        return ((List) new Select()
+                .from(Visit.class)
+                .where("fk_merchant_branch = ?", merchantBranch.getId())
+                .where("status = 1")
+                .execute()).size();
+    }
 }
