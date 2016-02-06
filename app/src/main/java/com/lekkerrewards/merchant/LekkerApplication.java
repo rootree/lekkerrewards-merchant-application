@@ -189,7 +189,7 @@ public class LekkerApplication extends com.activeandroid.app.Application {
             }
         };
 
-         timer.schedule (hourlyTask, 0l, 1000*60*Config.SYNC_EVERY_MINS);
+         timer.schedule (hourlyTask, 0l, 1000 * 60 * Config.SYNC_EVERY_MINS);
     }
     private void setLocale(){
 
