@@ -95,7 +95,7 @@ public class LekkerApplication extends com.activeandroid.app.Application {
 
     private static LekkerApplication instance;
     private JobManager jobManager;
-private CountDownTimer countDownTimer;
+    private CountDownTimer countDownTimer;
     public LekkerApplication() {
         instance = this;
     }
@@ -314,7 +314,7 @@ private CountDownTimer countDownTimer;
         return qrCard;
     }
 
-    public void checkInByQr(Qr qrCard) throws Exception {
+    public void checkInByQr(Qr qrCard, long scanningTimeInSecs) throws Exception {
 
         qrCard.lastUsed = new DateTime();
         qrCard.save();
@@ -323,7 +323,8 @@ private CountDownTimer countDownTimer;
 
         CheckInByQRRequest request = new CheckInByQRRequest(
                 qrCard.code + "",
-                LekkerApplication.merchantCustomer.updatedAt.getMillis()
+                LekkerApplication.merchantCustomer.updatedAt.getMillis(),
+                scanningTimeInSecs
         );
 
         getJobManager().addJobInBackground(new CheckInByQRJob(request));
@@ -398,6 +399,7 @@ private CountDownTimer countDownTimer;
             qrCard.updatedAt = now;
             qrCard.fkCustomer = customer;
             qrCard.status = QR_STATUS_ACTIVATED;
+            qrCard.lastUsed = now;
             qrCard.save();
 
             ActiveAndroid.setTransactionSuccessful();
@@ -406,7 +408,7 @@ private CountDownTimer countDownTimer;
             ActiveAndroid.endTransaction();
         }
 
-        checkInByQr(qrCard);
+        makeCheckIn(qrCard.fkCustomer);
 
         getJobManager().addJobInBackground(
                 new RegistrationJob(

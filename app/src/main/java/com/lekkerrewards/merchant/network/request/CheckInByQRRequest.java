@@ -9,10 +9,12 @@ public class CheckInByQRRequest implements Serializable {
 
     public final String qr;
     public final long timestamp;
+    public final long scanningTimeInSecs;
 
-    public CheckInByQRRequest(String qr, long timestamp) {
+    public CheckInByQRRequest(String qr, long timestamp, long scanningTimeInSecs) {
         this.qr = qr;
         this.timestamp = timestamp;
+        this.scanningTimeInSecs = scanningTimeInSecs;
     }
 
 }

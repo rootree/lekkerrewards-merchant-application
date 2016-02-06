@@ -28,6 +28,7 @@ import com.lekkerrewards.merchant.entities.Qr;
 import com.lekkerrewards.merchant.exceptions.CheckInException;
 import com.splunk.mint.Mint;
 
+import java.util.Date;
 import java.util.List;
 
 public class ScanningActivity extends BaseActivity {
@@ -36,6 +37,9 @@ public class ScanningActivity extends BaseActivity {
     private CompoundBarcodeView barcodeView;
     private Dialog dialog;
 
+    protected Date activityOpened = new Date();
+    protected Date QRScanned = new Date();
+
     private BarcodeCallback callback = new BarcodeCallback() {
 
         @Override
@@ -43,6 +47,8 @@ public class ScanningActivity extends BaseActivity {
             if (result.getText() != null) {
 
                 barcodeView.pause();
+
+                QRScanned = new Date();
 
                 String QR = result.getText();
                 LekkerApplication.lastQR = QR;
@@ -79,7 +85,9 @@ public class ScanningActivity extends BaseActivity {
 
                     try {
 
-                        ((LekkerApplication) getApplication()).checkInByQr(qrCard);
+                        long difference = QRScanned.getTime() - activityOpened.getTime();
+
+                        ((LekkerApplication) getApplication()).checkInByQr(qrCard, difference / 1000);
 
                         Intent intent = new Intent(getApplicationContext(), QrCheckConfirmedActivity.class);
                         intent.putExtra("user-age", 30);
@@ -171,6 +179,9 @@ public class ScanningActivity extends BaseActivity {
         settings.setAutoTorchEnabled(true);
         settings.setExposureEnabled(true);
         barcodeView.getBarcodeView().setCameraSettings(settings);
+
+        activityOpened = new Date();
+
 /*
         new ShowcaseView.Builder(this)
                 .setTarget(new ActionViewTarget(this, ActionViewTarget.Type.HOME))
