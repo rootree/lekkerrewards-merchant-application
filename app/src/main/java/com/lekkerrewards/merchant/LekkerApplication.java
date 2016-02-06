@@ -308,7 +308,7 @@ private CountDownTimer countDownTimer;
 
         Qr qrCard = Qr.getQRByCode(code + "");
         if (qrCard == null) {
-            throw new Exception(getStringById(R.string.message_wrong_qr));
+            throw new Exception(getStringById(R.string.message_wrong_qr ) + " ("+code+")");
         }
 
         return qrCard;
@@ -332,21 +332,21 @@ private CountDownTimer countDownTimer;
     public boolean registration(long qrCode, String eMail) throws Exception {
 
         if (!LekkerApplication.isEmailValid(eMail)) {
-            throw new Exception(getStringById(R.string.message_wrong_email));
+            throw new Exception(getStringById(R.string.message_wrong_email) + " ("+eMail+")");
         }
 
         Qr qrCard = Qr.getQRByCode(qrCode + "");
         //Qr qrCard = Qr.getQRByCode("840849");
         if (qrCard == null) {
-            throw new Exception(getStringById(R.string.message_wrong_qr));
+            throw new Exception(getStringById(R.string.message_wrong_qr) + " ("+qrCode+")");
         }
 
         if (qrCard.fkCustomer != null && qrCard.fkCustomer.eMail.equals(eMail)) {
-            throw new Exception(getStringById(R.string.message_email_linked));
+            throw new Exception(getStringById(R.string.message_email_linked) + " ("+eMail+")");
         }
 
         if (qrCard.fkCustomer != null) {
-            throw new Exception(getStringById(R.string.message_email_linked_to_another));
+            throw new Exception(getStringById(R.string.message_email_linked_to_another) + " ("+qrCode+")");
         }
 
         ActiveAndroid.beginTransaction();
@@ -424,12 +424,12 @@ private CountDownTimer countDownTimer;
     public void checkInByEmail(String eMail) throws Exception {
 
         if (!LekkerApplication.isEmailValid(eMail)) {
-            throw new Exception(getStringById(R.string.message_wrong_email));
+            throw new Exception(getStringById(R.string.message_wrong_email) + " ("+eMail+")");
         }
 
         Customer customer = Customer.getCustomerByEmail(eMail);
         if (customer == null) {
-            throw new Exception(getStringById(R.string.message_unregistrated));
+            throw new Exception(getStringById(R.string.message_unregistrated) + " ("+eMail+")");
         }
 
         makeCheckIn(customer);
@@ -733,7 +733,7 @@ private CountDownTimer countDownTimer;
         }
 
 
-        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
         File logFile = new File(backupPath + "/" + type + "_" + date + ".txt");
 
