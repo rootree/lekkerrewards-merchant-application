@@ -55,5 +55,7 @@
     <string name="cooldown_hint">You can check-in every %s hours</string>
     <string name="check_in_with_user_email">"CHECK-IN WITH "</string>
     <string name="registration_with_user_email">"SIGN UP WITH "</string>
-
+    <string name="cancel_redeem">CANCEL</string>
+    <string name="pause">POSTPONE</string>
+    <string name="confirm">ACCEPT</string>
 </resources>

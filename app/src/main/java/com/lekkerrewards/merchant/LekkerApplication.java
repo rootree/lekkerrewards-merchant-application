@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import com.activeandroid.ActiveAndroid;
 import com.devspark.appmsg.AppMsg;
 import com.google.gson.Gson;
+import com.lekkerrewards.merchant.activities.CustomerActivity;
 import com.lekkerrewards.merchant.activities.GreetingActivity;
 import com.lekkerrewards.merchant.activities.RedeemConfirmedActivity;
 import com.lekkerrewards.merchant.entities.Customer;
@@ -80,6 +81,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import retrofit.Call;
+import retrofit.Response;
 
 /**
  * Created by Ivan on 22/10/15.
@@ -93,7 +95,7 @@ public class LekkerApplication extends com.activeandroid.app.Application {
 
     private static LekkerApplication instance;
     private JobManager jobManager;
-
+private CountDownTimer countDownTimer;
     public LekkerApplication() {
         instance = this;
     }
@@ -217,17 +219,21 @@ public class LekkerApplication extends com.activeandroid.app.Application {
 
         final Activity  tCurrentActivity = mCurrentActivity;
 
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
         //if (!mCurrentActivity.getLocalClassName().equals(GreetingActivity.class.toString())) {
-        if (!(mCurrentActivity instanceof GreetingActivity || mCurrentActivity instanceof RedeemConfirmedActivity)) {
-            CountDownTimer countDownTimer = new CountDownTimer(Config.BEFORE_HOMESCREEN * 1000, 1000) {
+        if (!(
+                mCurrentActivity instanceof GreetingActivity ||
+                mCurrentActivity instanceof CustomerActivity ||
+                        mCurrentActivity instanceof RedeemConfirmedActivity
+        )) {
+            countDownTimer = new CountDownTimer(Config.BEFORE_HOMESCREEN * 1000, 1000) {
                 public void onTick(long millisUntilFinished) {
 
                 }
                 public void onFinish() {
                     tCurrentActivity.finish();
-
-                    //Intent intent = new Intent(getApplicationContext(), GreetingActivity.class);
-                    //startActivity(intent);
                 }
             }.start();
         }
@@ -508,11 +514,21 @@ public class LekkerApplication extends com.activeandroid.app.Application {
         return true;
     }
 
-    public boolean redeem(MerchantsCustomers merchantCustomer, Reward reward) throws Exception {
+    public boolean redeemCheck(MerchantsCustomers merchantCustomer, Reward reward) throws Exception {
 
         if (reward.points > merchantCustomer.points) {
             throw new Exception(getStringById(R.string.message_not_visits));
         }
+
+        return true;
+    }
+
+    public boolean redeem(MerchantsCustomers merchantCustomer, Reward reward) throws Exception {
+
+        if (!redeemCheck(merchantCustomer, reward)) {
+            return false;
+        }
+
         ActiveAndroid.beginTransaction();
         DateTime now = new DateTime();
 
@@ -681,19 +697,21 @@ public class LekkerApplication extends com.activeandroid.app.Application {
         Log.e(LekkerApplication.TAG, error.toString());
     }
 
-    public static void logTransaction(Serializable request, int HTTPCode) {
+    public static void logTransaction(Serializable request, Response response) {
 
         String date = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(new Date());
 
         Gson gson = new Gson();
         String json = gson.toJson(request);
+        String jsonResponse = gson.toJson(response.body());
 
         String lineForLog = String.format(
-                "%s | %d | %s | %s",
+                "%s | %d | %s | %s | %s",
                 date,
-                HTTPCode,
+                response.code(),
                 request.getClass().getSimpleName(),
-                json
+                json,
+                jsonResponse
         );
 
         getInstance().appendLog(

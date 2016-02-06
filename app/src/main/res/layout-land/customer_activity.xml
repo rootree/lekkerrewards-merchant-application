@@ -188,7 +188,7 @@
         <LinearLayout
             android:id="@+id/metchantLogo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:measureWithLargestChild="false"
             android:orientation="vertical"
@@ -234,23 +234,46 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center">
 
 
-                <TextView
-                    android:id="@+id/coundDown"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/coundDown"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="5 сек. до выхода"
+                        android:textColor="@color/primary_text_default_material_dark"
+                        android:textSize="12pt"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/pause_btn"
+                    style="@style/allBtn"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:text="5 сек. до выхода"
-                    android:textColor="@color/primary_text_default_material_dark"
-                    android:textSize="14pt"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp" />
+                    android:layout_height="45dp"
 
+                    android:background="@drawable/btn_blue"
 
+                    android:text="@string/pause"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp" />
             </LinearLayout>
 
 

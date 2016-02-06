@@ -14,6 +14,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
@@ -169,7 +171,13 @@ public class ScanningActivity extends BaseActivity {
         settings.setAutoTorchEnabled(true);
         settings.setExposureEnabled(true);
         barcodeView.getBarcodeView().setCameraSettings(settings);
-
+/*
+        new ShowcaseView.Builder(this)
+                .setTarget(new ActionViewTarget(this, ActionViewTarget.Type.HOME))
+                //.setContentTitle("ShowcaseView")
+                //.setContentText("This is highlighting the Home button")
+                .hideOnTouchOutside()
+                .build();*/
     }
 
     public void onClickTurmsLink(View v) {
