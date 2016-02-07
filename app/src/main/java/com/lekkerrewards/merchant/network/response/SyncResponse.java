@@ -1,5 +1,7 @@
 package com.lekkerrewards.merchant.network.response;
 
+import com.lekkerrewards.merchant.network.response.sync.Customer;
+import com.lekkerrewards.merchant.network.response.sync.Qr;
 import com.lekkerrewards.merchant.network.response.sync.Reward;
 import com.lekkerrewards.merchant.network.response.sync.RewardHistory;
 
@@ -16,6 +18,8 @@ public class SyncResponse extends LekkerResponse{
     public final boolean isUpdated;
     public final ArrayList<String> rewardsForDelete;
     public final HashMap<String, Reward> rewardsForUpdate;
+    public final HashMap<String, Customer> customersForUpdate;
+    public final HashMap<String, Qr> qrsForAdd;
     public final HashMap<String, RewardHistory> rewardsHistory;
     public final long dateTime;
 
@@ -25,6 +29,8 @@ public class SyncResponse extends LekkerResponse{
             boolean isUpdated,
             ArrayList<String> rewardsForDelete,
             HashMap<String, Reward> rewardsForUpdate,
+            HashMap<String, Customer> customersForUpdate,
+            HashMap<String, Qr> qrsForAdd,
             HashMap<String, RewardHistory> rewardsHistory,
             long dateTime,
             int code
@@ -33,6 +39,8 @@ public class SyncResponse extends LekkerResponse{
         this.isUpdated = isUpdated;
         this.rewardsForDelete = rewardsForDelete;
         this.rewardsForUpdate = rewardsForUpdate;
+        this.customersForUpdate = customersForUpdate;
+        this.qrsForAdd = qrsForAdd;
         this.rewardsHistory = rewardsHistory;
         this.dateTime = dateTime;
     }

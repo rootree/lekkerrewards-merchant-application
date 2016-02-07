@@ -46,7 +46,7 @@ public class RegistrationActivity extends BaseActivity {
 
                 try {
 
-                    long qrCode = getIntent().getIntExtra("qr-code", 0);
+                    int qrCode = getIntent().getIntExtra("qr-code", 0);
 
                     EditText eMailField =(EditText)findViewById(R.id.email_field);
                     String eMail = eMailField.getText().toString();

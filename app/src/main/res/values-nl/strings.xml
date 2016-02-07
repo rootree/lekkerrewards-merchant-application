@@ -127,5 +127,6 @@ LekkerRewards\' Algemene gebruiksvoorwaarden en Privacybeleid.</string>
     <string name="cancel_redeem">ANNULEER</string>
     <string name="pause">UITSTELLEN</string>
     <string name="confirm">ACCEPTEREN</string>
+    <string name="dectived_qr">De QR-code is gedeactiveerd</string>
 
 </resources>

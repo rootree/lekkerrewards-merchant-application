@@ -39,7 +39,7 @@ public class Qr extends Model
     public Customer fkCustomer;
 
 
-    public static Qr getQRByCode(String code) {
+    public static Qr getQRByCode(int code) {
 
         return new Select()
                 .from(Qr.class)

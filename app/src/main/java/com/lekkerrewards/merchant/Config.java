@@ -5,7 +5,8 @@ package com.lekkerrewards.merchant;
  */
 public class Config {
 
-    //public static final String API_URL = "http://192.168.58.1:8888/api/";
+    //public static final String API_URL = "http://192.168.56.1:8888/api/";
+   // public static final String API_URL = "http://lekkerrewards.local:8888/api/";
     public static final String API_URL = "http://lekkerrewards.nl/api/";
 
     public final static String API_KEY =  "sdfsdsdfsdsdfs4444sdsdfsdsdfsdsdfsd"; // "test-api"

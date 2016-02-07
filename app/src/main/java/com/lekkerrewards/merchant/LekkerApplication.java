@@ -108,7 +108,8 @@ public class LekkerApplication extends com.activeandroid.app.Application {
     public final static int QR_SOURCE_CARD = 2;
 
     public final static int QR_STATUS_ACTIVATED = 1;
-    public final static int QR_STATUS_DEACTIVATED = 2;
+    public final static int QR_STATUS_DEACTIVATED = 0;
+    public final static int QR_STATUS_PREPARED = 2;
 
 
     public static final String MIXPANEL_TOKEN = "7983b9326e9b96046d381386846d8d36";
@@ -296,7 +297,7 @@ public class LekkerApplication extends com.activeandroid.app.Application {
             throw new Exception(getStringById(R.string.message_check_card));
         }
 
-        long code = Integer.parseInt(splited[1]);
+        int code = Integer.parseInt(splited[1]);
         long value = Integer.parseInt(splited[0], 16);
         long QRId = value / code;
 
@@ -306,9 +307,13 @@ public class LekkerApplication extends com.activeandroid.app.Application {
 
         //code = 840849; // TODO: 27/10/15
 
-        Qr qrCard = Qr.getQRByCode(code + "");
+        Qr qrCard = Qr.getQRByCode(code);
         if (qrCard == null) {
             throw new Exception(getStringById(R.string.message_wrong_qr ) + " ("+code+")");
+        }
+
+        if (qrCard.status == LekkerApplication.QR_STATUS_DEACTIVATED) {
+            throw new Exception(getString(R.string.dectived_qr) + " ("+code+")");
         }
 
         return qrCard;
@@ -330,13 +335,13 @@ public class LekkerApplication extends com.activeandroid.app.Application {
         getJobManager().addJobInBackground(new CheckInByQRJob(request));
     }
 
-    public boolean registration(long qrCode, String eMail) throws Exception {
+    public boolean registration(int qrCode, String eMail) throws Exception {
 
         if (!LekkerApplication.isEmailValid(eMail)) {
             throw new Exception(getStringById(R.string.message_wrong_email) + " ("+eMail+")");
         }
 
-        Qr qrCard = Qr.getQRByCode(qrCode + "");
+        Qr qrCard = Qr.getQRByCode(qrCode);
         //Qr qrCard = Qr.getQRByCode("840849");
         if (qrCard == null) {
             throw new Exception(getStringById(R.string.message_wrong_qr) + " ("+qrCode+")");
