@@ -156,6 +156,7 @@ public class LekkerApplication extends com.activeandroid.app.Application {
         checkOffOnScreen();
 
 
+
         try {
             File sd = Environment.getExternalStorageDirectory();
             File data = Environment.getDataDirectory();
@@ -192,7 +193,8 @@ public class LekkerApplication extends com.activeandroid.app.Application {
             }
         };
 
-         timer.schedule (hourlyTask, 0l, 1000 * 60 * Config.SYNC_EVERY_MINS);
+         //timer.schedule (hourlyTask, 0l, 5000 );
+          timer.schedule (hourlyTask, 0l, 1000 * 60 * Config.SYNC_EVERY_MINS);
     }
     private void setLocale(){
 
